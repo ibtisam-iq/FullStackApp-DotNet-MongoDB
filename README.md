@@ -145,3 +145,95 @@ To manipulate your MongoDB database using MongoDB Shell:
 ## Project Structure
 
 Please refer to `consoleOutput.txt` for more details. 😊
+
+---
+
+## MongoDB Connection Troubleshooting
+
+### **1. Use `127.0.0.1` Instead of `localhost`**
+- In some Linux setups, **`localhost`** might resolve to `::1` (IPv6), while MongoDB is bound to `127.0.0.1` (IPv4).
+- Try updating the connection string:
+  
+  ```json
+  "ConnectionString": "mongodb://127.0.0.1:27017"
+  ```
+
+### **2. Database Doesn't Exist Yet**
+- MongoDB **does not create databases until you insert data**. Ensure `ProductDB` exists by running:
+  
+  ```bash
+  mongosh
+  ```
+  
+  Then, check databases:
+  
+  ```js
+  show dbs
+  ```
+  
+  If `ProductDB` is missing, manually create it:
+  
+  ```js
+  use ProductDB 
+  db.Products.insertOne({ "test": "testValue" })
+  ```
+
+#### **3. MongoDB Server Not Running**
+- Ensure the MongoDB server is running:
+
+  ```bash
+  sudo netstat -tulnp | grep 27017
+  telnet 127.0.0.1 27017
+  ```
+
+### **4. MongoDB Might Not Be Running Properly**
+- If MongoDB is listening, but `mongosh` is still failing, Check MongoDB logs for errors:
+  
+  ```bash
+  sudo cat /var/log/mongodb/mongod.log | tail -50
+  ```
+
+### **5. Port Blocked by Firewall**
+- Ensure **port 27017** is open:
+  
+  ```bash
+  sudo ufw allow 27017/tcp 
+  sudo ufw status
+  ```
+
+### **6. Connection String Authentication Issues**
+- If MongoDB **requires authentication**, you need to add credentials:
+  
+  ```json
+  "ConnectionString": "mongodb://username:password@127.0.0.1:27017/ProductDB"
+  ```
+
+- Check authentication settings in `/etc/mongod.conf` under the `security` section:
+  
+  ```yaml
+  security:
+    authorization: enabled
+  ```
+  
+- If authentication is enabled, login manually:
+  
+  ```bash
+  mongosh "mongodb://127.0.0.1:27017" --username yourUser --password yourPassword --authenticationDatabase admin
+  
+---
+
+## **Difference Between `mongosh` and `mongosh "mongodb://127.0.0.1:27017/?directConnection=true"`**
+
+### **1. `mongosh "mongodb://127.0.0.1:27017/?directConnection=true"`**
+*   This explicitly connects to MongoDB running on `127.0.0.1:27017`.
+*   The `?directConnection=true` flag forces a direct connection to a **single** MongoDB instance, bypassing automatic discovery of replica sets or sharded clusters.
+*   Useful when connecting to **standalone** instances or when you want to avoid any delay in server selection.
+
+### **2. `mongosh`**
+*   This command tries to connect to the **default MongoDB instance** on `mongodb://localhost:27017/`.
+*   If `localhost` resolves to `::1` (IPv6), but MongoDB is bound to `127.0.0.1` (IPv4), it may fail.
+*   It automatically attempts to detect whether it's connecting to a standalone, replica set, or sharded cluster.
+
+### **When to Use Which?**
+*   If you're troubleshooting connection issues, **explicitly specifying `127.0.0.1` with `directConnection=true`** ensures you are directly connecting to the correct instance.
+*   If MongoDB is running normally and bound to the default `localhost:27017`, the shorter `mongosh` command works fine.
