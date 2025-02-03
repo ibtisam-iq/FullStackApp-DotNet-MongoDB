@@ -416,4 +416,29 @@ For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
    2025-02-03T15:14:49.479+05:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
 ------
 
-test> 
+test> exit
+
+ibtisam@lubuntu:~/3TierFullStackApp-DotNet-MongoDB$ dotnet build
+MSBuild version 17.8.5+b5265ef37 for .NET
+  Determining projects to restore...
+  Restored /home/ibtisam/3TierFullStackApp-DotNet-MongoDB/DotNetMongoCRUDApp.csproj (in 4.04 sec).
+  DotNetMongoCRUDApp -> /home/ibtisam/3TierFullStackApp-DotNet-MongoDB/bin/Debug/net8.0/DotNetMongoCRUDApp.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:40.46
+ibtisam@lubuntu:~/3TierFullStackApp-DotNet-MongoDB$ dotnet run
+Building...
+warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]
+      No XML encryptor configured. Key {50cea7d8-7dce-4d0e-9c42-fb80be955f0b} may be persisted to storage in unencrypted form.
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://0.0.0.0:5035
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /home/ibtisam/3TierFullStackApp-DotNet-MongoDB
+
