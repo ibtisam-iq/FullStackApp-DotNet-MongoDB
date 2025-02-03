@@ -365,3 +365,55 @@ Current Mongosh Log ID:	675b6807d6e9a9fcf475ab3b
 Connecting to:    	mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.5
 MongoServerSelectionError: Server selection timed out after 2000 ms
 ibtisam@lubuntu:~$
+
+ibtisam@lubuntu:~$ mongosh "mongodb://127.0.0.1:27017/?directConnection=true"
+Current Mongosh Log ID:	67a097456d95d0c3a875ab3b
+Connecting to:		mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.5
+Using MongoDB:		7.0.15
+Using Mongosh:		2.3.5
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+------
+   The server generated these startup warnings when booting
+   2025-02-03T15:14:46.000+05:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2025-02-03T15:14:49.479+05:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+admin   40.00 KiB
+config  12.00 KiB
+local   72.00 KiB
+test> use ProductDB
+switched to db ProductDB
+ProductDB> db.Products.insertOne({ "test": "testValue" })
+{
+  acknowledged: true,
+  insertedId: ObjectId('67a098196d95d0c3a875ab3c')
+}
+ProductDB> show dbs
+ProductDB   8.00 KiB
+admin      40.00 KiB
+config     12.00 KiB
+local      72.00 KiB
+ProductDB> exit
+ibtisam@lubuntu:~$ mongosh
+Current Mongosh Log ID:	67a098c059887fd4d075ab3b
+Connecting to:		mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.5
+Using MongoDB:		7.0.15
+Using Mongosh:		2.3.5
+mongosh 2.3.8 is available for download: https://www.mongodb.com/try/download/shell
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-02-03T15:14:46.000+05:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2025-02-03T15:14:49.479+05:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> 
