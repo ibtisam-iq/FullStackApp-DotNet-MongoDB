@@ -6,7 +6,7 @@ services:
     container_name: mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_PASSWORD: ibtisam
     ports:
       - "27017:27017"
     volumes:
@@ -28,7 +28,7 @@ services:
         condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      MongoDB__ConnectionString: "mongodb://root:example@mongodb:27017"
+      MongoDB__ConnectionString: "mongodb://root:ibtisam@mongodb:27017"
       MongoDB__DatabaseName: "ProductDB"
     volumes:
       - ./appsettings.json:/app/appsettings.json
