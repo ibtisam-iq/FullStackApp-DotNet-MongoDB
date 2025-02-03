@@ -43,33 +43,8 @@ To install the .NET SDK and Runtime, execute the following commands in your term
 
 ### 2. Installing MongoDB
 
-To install MongoDB, execute the following commands in your terminal:
+To install MongoDB, please follow the guide [here](https://github.com/ibtisamops/nectar/blob/main/mongodb/MongoDB.md.)
 
-1. **Add MongoDB's GPG key and repository:**
-
-   ```bash
-   curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
-   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
-   --dearmor
-   ```
-
-   ```bash
-   echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
-   ```
-
-2. **Install MongoDB:**
-
-   ```bash
-   sudo apt update
-   sudo apt install -y mongodb-org
-   ```
-
-3. **Enable and Start MongoDB service:**
-
-   ```bash
-   sudo systemctl enable mongod
-   sudo systemctl start mongod
-   ```
 
 ### 3. Setting Up MongoDB
 
