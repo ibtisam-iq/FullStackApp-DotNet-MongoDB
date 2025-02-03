@@ -145,3 +145,41 @@ Here's how it's different:
 
 ---
 
+## Why dotnet build + dotnet run ≠ dotnet publish?
+- dotnet build compiles your code into intermediate binaries, but it doesn’t produce an optimized, ready-to-deploy package.
+- dotnet run simply executes the compiled code, but it still depends on the full .NET SDK.
+- dotnet publish optimizes everything, strips unnecessary files, and prepares a production-ready package.
+
+🔹 Example
+**1️⃣ Running in Development (dotnet build + dotnet run)**
+
+```bash
+dotnet build
+dotnet run
+```
+- **What happens?**
+ - Compiles the project into bin/Debug/net8.0/
+ - Runs the app directly from source
+ - Slower startup, not optimized
+
+**2️⃣ Preparing for Production (dotnet publish)**
+```bash
+dotnet publish -c Release -o out
+dotnet out/DotNetMongoCRUDApp.dll
+```
+- **What happens?**
+ - Optimized build created in the out/ folder
+ - Removes extra debugging symbols
+ - Faster startup, smaller binaries
+ - No need for full .NET SDK (only runtime required)
+
+🔹 **Conclusion**
+
+- ❌ dotnet build + dotnet run ≠ dotnet publish
+- ✅ If you want a production-ready build, use dotnet publish instead of dotnet run.
+
+In your Dockerfile, dotnet publish is used because it ensures:
+
+- Faster application startup
+- Smaller container image
+- No unnecessary files from development
