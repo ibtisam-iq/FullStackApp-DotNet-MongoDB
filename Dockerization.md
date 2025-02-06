@@ -1,23 +1,51 @@
-## .NET Project Architecture Analysis
+# .NET Project Architecture Analysis
 
 > This is quite lenghty file, you can read its short version [here](dockerization.md).
 
-### Understanding the Architecture
+## Table of Contents
+- [Understanding the Architecture](#understanding-the-architecture)
+  - [Presentation Layer vs. Business Logic Layer](#presentation-layer-vs-business-logic-layer)
+  - [Data Layer](#data-layer)
+  - [Why It’s 2-Tier](#why-its-2-tier)
+  - [To Make It a True 3-Tier Architecture](#to-make-it-a-true-3-tier-architecture)
+  - [Conclusion](#conclusion)
+- [3-Tier Architecture Structure in .NET](#3-tier-architecture-structure-in-net)
+  - [Suggested 3-Tier Architecture Structure](#suggested-3-tier-architecture-structure)
+  - [Breakdown of Layers](#breakdown-of-layers)
+    - [Presentation Layer (API or UI) - `/src/MyDotNetApp.Api`](#presentation-layer-api-or-ui---srcmydotnetappapi)
+    - [Business Logic Layer (BLL) - `/src/MyDotNetApp.BLL`](#business-logic-layer-bll---srcmydotnetappbll)
+    - [Data Access Layer (DAL) - `/src/MyDotNetApp.DAL`](#data-access-layer-dal---srcmydotnetappdal)
+  - [Flow Example](#flow-example)
+  - [Additional Points for Clarity](#additional-points-for-clarity)
+- [Understanding the Dockerfile for .NET + MongoDB Project](#understanding-the-dockerfile-for-net--mongodb-project)
+  - [Dockerfile Breakdown](#dockerfile-breakdown)
+  - [Step-by-Step Explanation](#step-by-step-explanation)
+- [Difference Between `dotnet build`, `dotnet run`, and `dotnet publish`](#difference-between-dotnet-build-dotnet-run-and-dotnet-publish)
+  - [What Happens When You Run Locally?](#what-happens-when-you-run-locally)
+  - [What Happens in the Dockerfile?](#what-happens-in-the-dockerfile)
+  - [Key Differences & When to Use What?](#key-differences--when-to-use-what)
+  - [Why Dockerfile Uses `dotnet publish` Instead of `dotnet run`?](#why-dockerfile-uses-dotnet-publish-instead-of-dotnet-run)
+  - [When Would You Use `dotnet run` Inside a Container?](#when-would-you-use-dotnet-run-inside-a-container)
+  - [Conclusion](#conclusion)
+  - [Why dotnet build + dotnet run ≠ dotnet publish?](#why-dotnet-build--dotnet-run--dotnet-publish)
+
+
+## Understanding the Architecture
 
 In this .NET project, there is some distinction between layers, but it still leans more toward a **2-Tier architecture**, and here's why:
 
-#### Presentation Layer vs. Business Logic Layer
+### Presentation Layer vs. Business Logic Layer
 - Controllers (Presentation Layer) directly call the Services (Business Logic Layer).
 - The `ProductService.cs` interacts with the data layer, but this still falls under a service layer and is not decoupled into a separate Data Access Layer (DAL) or Repository Layer.
 
-#### Data Layer
+### Data Layer
 - The MongoDB interaction is directly handled in the service (`ProductService.cs`). Ideally, in a true **3-Tier architecture**, there should be a separate **Data Access Layer** or **Repository Layer** that interacts with the database, providing an abstraction for the services. This allows for better scalability and flexibility in case the data source needs to change.
 
-### Why It’s 2-Tier
+## Why It’s 2-Tier
 - The **Service Layer** is directly responsible for accessing the database (MongoDB in this case), making it a **2-Tier architecture**.
 - There's no clear separation of the data interaction and business logic, as the service is doing both — handling business logic and interacting with the data source.
 
-### To Make It a True 3-Tier Architecture
+## To Make It a True 3-Tier Architecture
 You could refactor this application by introducing a **Data Access Layer (DAL)** or **Repository Layer** that abstracts the database interaction away from the service layer. Here's what that might look like:
 
 - **Presentation Layer (Controllers):** Handles HTTP requests and returns responses.
@@ -26,7 +54,7 @@ You could refactor this application by introducing a **Data Access Layer (DAL)**
 
 By introducing a **Repository or DAL pattern**, the service layer will only handle business logic, and the data access will be abstracted, providing better separation and making the architecture **true 3-Tier**.
 
-### Conclusion
+## Conclusion
 You're correct that this project is more of a **2-Tier architecture**, and with slight modifications, it can be refactored into a **3-Tier architecture**.
 
 ---
