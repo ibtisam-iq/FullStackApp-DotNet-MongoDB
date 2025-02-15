@@ -43,7 +43,7 @@ To install the .NET SDK and Runtime, execute the following commands in your term
 
 ### 2. Installing MongoDB
 
-To install MongoDB, please follow the guide [here](https://github.com/ibtisamops/nectar/blob/main/mongodb/MongoDB.md.)
+To install MongoDB, please follow the guide [here](https://github.com/ibtisam-iq/nectar/blob/main/mongodb/MongoDB.md.)
 
 
 ### 3. Setting Up MongoDB
